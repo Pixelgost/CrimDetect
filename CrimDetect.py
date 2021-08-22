@@ -126,7 +126,6 @@ while True:
             num, File = CheckFile(NotApprovedFiles,frame)
             if (num >0):
                 name = str(File)[23:-4]
-                DisplayText = 'Verified, Person is: ' + name
             if (num >0):
                 DisplayText = 'Disapproved Person: ' + name
             else:
