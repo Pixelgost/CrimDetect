@@ -100,7 +100,8 @@ def CheckFile(Files, frame):
 while True:
     try:
         ##Save a frame of the video output
-        ret,frame = cap.read()
+        #ret,frame = cap.read()
+        frame = cv2.imread('rdj.jpg')
         ##Analyze the frame for emotions and save the dominant emotion
         result = DeepFace.analyze(frame,actions = ['emotion'])
         emote= result['dominant_emotion']
@@ -114,7 +115,7 @@ while True:
         ##Declare more variables for later use
         num = 0
         name = ' '
-        ##Check if Face is a face from the approved list, if yes then set DisplayText to show who they are, otherwise check other scenarios
+        ##Check if the Face detected is a face from the approved list, if yes then set DisplayText to show who they are, otherwise check other scenarios
         num, File = CheckFile(ApprovedFiles,frame)
         if (num >0):
             name = str(File)[9:-5]
@@ -126,6 +127,7 @@ while True:
             num, File = CheckFile(NotApprovedFiles,frame)
             if (num >0):
                 name = str(File)[23:-4]
+                DisplayText = 'Verified, Person is: ' + name
             if (num >0):
                 DisplayText = 'Disapproved Person: ' + name
             else:
@@ -162,11 +164,11 @@ while True:
         cv2.putText(frame, DisplayText, (10,100), font, 1, (0,0,255), 2, cv2.LINE_4)
         cv2.imshow('Original video',frame)
     except ValueError:
-        ##If no Faces are detected, this error will be thrown and the video input will be displayed with the worlds 'no face detected'
+        ##If no Faces are detected, this error will be thrown and the video input will be displayed with the words 'no face detected'
         font = cv2.FONT_HERSHEY_PLAIN
         cv2.putText(frame, 'No Face Detected', (10,100), font, 2, (255,0,0), 2, cv2.LINE_4)
         cv2.imshow('Original video',frame)
-    ##if q key is pressed, stop the program
+    ##if q key is pressed, stop the break the loop
     if cv2.waitKey(2)&0xFF == ord('q'):
             break
 ##Stop the video capture and destroy output windows
